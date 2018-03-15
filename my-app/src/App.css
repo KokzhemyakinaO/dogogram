@@ -1,0 +1,66 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.allImg {
+  height: 150px;
+  margin: 10px;
+}
+
+h1 {
+  color: #001529;
+  font-size: 2em;
+  text-align: center;
+}
+.ant-row {
+  min-height: 80vh
+}
+
+.scale div {
+  margin-top: 60px;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  margin: 16px auto;
+  background-image: url(images/favicon.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 73%;
+  padding: 5px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.ant-card.ant-card-bordered.ant-card-hoverable {
+  margin: 10px auto;
+}
+
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
