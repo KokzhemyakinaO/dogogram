@@ -4,11 +4,13 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { ScaleLoader } from 'react-spinners';
+import RandomPhotoComponent from './components/RandomPhotoComponent'
+import AllPhotoComponent from './components/AllPhotoComponent'
 
-import { Layout, Menu, Input, Row, Col, Card} from 'antd';
+import { Layout, Menu, Input, Row, Col} from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
-const { Meta } = Card;
+
 
 ReactDOM.render(<App/>, document.getElementById('app'));
 registerServiceWorker();
@@ -30,6 +32,7 @@ class Breeds extends React.Component {
 
         this.filterList = this.filterList.bind(this);
         this.selectBreed = this.selectBreed.bind(this);
+        this.randomClick = this.randomClick.bind(this);
     }
 
     componentDidMount() {
@@ -48,7 +51,6 @@ class Breeds extends React.Component {
     }
 
     selectBreed(e) {
-
         this.setState({
             currentBreed : e.key,
             images: [],
@@ -62,7 +64,7 @@ class Breeds extends React.Component {
                 (result) => {
                     this.setState({
                         loading: false,
-                        images: result.status == "success"  ? result.message : []
+                        images: result.status === "success"  ? result.message : []
                     });
                 },
                 (error) => {
@@ -72,9 +74,6 @@ class Breeds extends React.Component {
 
         this.randomClick(e.key)
     }
-
-
-
 
     randomClick(currentBreed) {
         this.setState({
@@ -97,7 +96,6 @@ class Breeds extends React.Component {
     }
 
 
-
     filterList(e){
         this.setState( {
             searchText: e.target.value
@@ -107,7 +105,6 @@ class Breeds extends React.Component {
 
     render() {
         const {searchText, breeds, images, loading, randimage, currentBreed} = this.state;
-
         var items = breeds.filter(function(item){
             return item.toLowerCase().search(searchText.toLowerCase())!== -1;
         }).map(function(a, i) {
@@ -118,34 +115,6 @@ class Breeds extends React.Component {
             );
         }, this);
 
-
-        var imagesView = images.map(function(a, i) {
-            return (
-                <Col span={6} key={i} >
-                    <img className="allImg" src={a} alt={a}/>
-                </Col>
-            );
-        }, this);
-
-
-        const renderImage = () => {
-            if(currentBreed) {
-                return (<div>
-                    <Card
-                        hoverable
-                        style={{width: 240}}
-                        cover={<img alt="example" src={randimage}/>}
-                    >
-                        <Meta
-                            title={currentBreed}
-                        />
-                    </Card>
-                    <i className="anticon anticon-reload" onClick={(e) => this.randomClick(currentBreed)}></i>
-                </div>);
-            } else {
-                return (<h2 style={{ textAlign: 'center', margin: '20px auto' }}>Please, select breed..</h2>);
-            }
-        }
 
         return (
             <Layout>
@@ -165,7 +134,7 @@ class Breeds extends React.Component {
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                         <Row style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
                             <Col span={24} style={{ textAlign: 'center' }}>
-                                {renderImage()}
+                                <RandomPhotoComponent breed={currentBreed} image={randimage} onrandomclick={this.randomClick}/>
                                 <div className="scale">
                                     <ScaleLoader
                                         color={'#003152'}
@@ -173,7 +142,7 @@ class Breeds extends React.Component {
                                     />
                                 </div>
                             </Col>
-                            {imagesView}
+                            <AllPhotoComponent allimage={images}/>
                         </Row>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
